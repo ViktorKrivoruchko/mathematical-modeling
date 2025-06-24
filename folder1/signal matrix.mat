@@ -1,0 +1,50 @@
+t = 0:0.2:50; % Вектор времени
+A = 1; % Амплитуда
+tau = 10; % Период
+
+% Постоянная функция
+f1 = A * ones(size(t));
+
+% Линейная функция
+f2 = (A / tau) * t;
+
+% Синусоидальный сигнал
+f3 = A * sin(2 * pi * t / tau);
+
+% Ступенчатая функция
+f4 = zeros(size(t));
+f4(t >= tau) = A;
+
+% Пилообразный сигнал
+f5 = mod(t, 5);
+
+% Прямоугольные импульсы
+f6 = zeros(size(t));
+for i = 1:length(t)
+    if mod(floor(t(i)/5), 2) == 0
+        f6(i) = A; % Импульс
+    else
+        f6(i) = 0; % Неприсутствие импульса
+    end
+end
+
+signals_matrix = [t', f1', f2', f3', f4', f5', f6']; % Формирование матрицы
+
+figure;
+hold on;
+plot(t, f1, 'r', 'DisplayName', 'Постоянная функция');
+plot(t, f2, 'g', 'DisplayName', 'Линейная функция');
+plot(t, f3, 'b', 'DisplayName', 'Синусоидальный сигнал');
+plot(t, f4, 'm', 'DisplayName', 'Ступенчатая функция');
+plot(t, f5, 'c', 'DisplayName', 'Пилообразный сигнал');
+plot(t, f6, 'k', 'DisplayName', 'Прямоугольные импульсы');
+
+title('Сигналы');
+xlabel('Время (t)');
+ylabel('Амплитуда');
+legend show;
+grid on;
+hold off;
+
+disp('Матрица сигналов:');
+disp(signals_matrix);
