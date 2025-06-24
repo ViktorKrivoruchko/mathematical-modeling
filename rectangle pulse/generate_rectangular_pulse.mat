@@ -1,0 +1,24 @@
+T = 1; % Период одного импульса
+duty_cycle = 0.5; % Доля времени, когда сигнал равен 1
+num_impulses = 10; % Количество импульсов
+sampling_rate = 100; % Частота дискретизации
+t = 0:1/sampling_rate:T*num_impulses; % Вектор времени
+
+% Генерация прямоугольного импульса
+rect_pulse = zeros(1, length(t));
+for i = 0:num_impulses-1
+    start_index = round(i*T*sampling_rate) + 1;
+    end_index = round(start_index + duty_cycle*T*sampling_rate) - 1;
+    rect_pulse(start_index:end_index) = 1; % Установка значений импульса
+end
+
+disp('Вектор прямоугольного импульса:');
+disp(rect_pulse);
+
+figure;
+plot(t, rect_pulse, 'b', 'LineWidth', 1.5);
+xlabel('Время (с)');
+ylabel('Амплитуда');
+title('Периодический прямоугольный импульс');
+grid on;
+axis([0 T*num_impulses -0.1 1.1]);
